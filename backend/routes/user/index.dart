@@ -19,6 +19,6 @@ Future<Response> _createUser(RequestContext context) async {
     return Response(body: 'Request body is required', statusCode: 400);
   }
   return Service.getService().createUser(
-    context.request.body as Map<String, dynamic>,
+    context.mountedParams as Map<String, dynamic>,
   );
 }
