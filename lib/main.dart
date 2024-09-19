@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_application/logic/MatchBuilder.dart';
 
 
 void main() {
@@ -74,7 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            MatchBuilder.buildCard({'team': 'A', 'score': '1', 'opponentScore': '1', 'opponent': 'Chalon FC 3'} as Map<String, dynamic>, context),
           ],
         ),
       ),
