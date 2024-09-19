@@ -2,6 +2,15 @@ import 'package:flutter/cupertino.dart';
 
 class MatchBuilder {
   static buildCard(Map<String, dynamic> match, BuildContext context) {
+    Color color;
+    if (match["score"] > match["opponentScore"]) {
+      color = const Color.fromARGB(255, 1, 245, 7);
+    } else if (match["score"] < match["opponentScore"]) {
+      color = const Color.fromARGB(255, 245, 1, 1);
+    } else {
+      color = const Color.fromARGB(255, 255, 255, 255);
+    }
+
     return Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
         color: const Color(0xFF222222),
@@ -13,14 +22,14 @@ class MatchBuilder {
               Column(
                 children: [
                   // Image(image: "")
-                  Text('USRF ' + match['team'])
+                  Text('USRF ${match["team"]}')
                 ],
               ),
               Row(
                 children: [
-                  Text(match['score']),
-                  const Text(" - "),
-                  Text(match['opponentScore'])
+                  Text(match['score'], style: TextStyle(color: color)),
+                  Text(" - ", style: TextStyle(color: color)),
+                  Text(match['opponentScore'], style: TextStyle(color: color))
                 ],
               ),
               Column(
