@@ -9,7 +9,7 @@ class HashClient with IHashClient {
     final rnd = Random();
 
     return String.fromCharCodes(Iterable.generate(
-        5, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))),);
+      5, (_) => chars.codeUnitAt(rnd.nextInt(chars.length)),),);
   }
 
   @override

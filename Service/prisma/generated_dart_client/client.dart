@@ -3225,6 +3225,468 @@ class HistoryDelegate {
   }
 }
 
+class OpponentDelegate {
+  const OpponentDelegate._(this._client);
+
+  final PrismaClient _client;
+
+  _i1.ActionClient<_i2.Opponent?> findUnique({
+    required _i3.OpponentWhereUniqueInput where,
+    _i3.OpponentSelect? select,
+    _i3.OpponentInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.findUnique,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Opponent?>(
+      action: 'findUniqueOpponent',
+      result: result,
+      factory: (e) => e != null ? _i2.Opponent.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i2.Opponent> findUniqueOrThrow({
+    required _i3.OpponentWhereUniqueInput where,
+    _i3.OpponentSelect? select,
+    _i3.OpponentInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.findUniqueOrThrow,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Opponent>(
+      action: 'findUniqueOpponentOrThrow',
+      result: result,
+      factory: (e) => _i2.Opponent.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i2.Opponent?> findFirst({
+    _i3.OpponentWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.OpponentOrderByWithRelationInput>,
+            _i3.OpponentOrderByWithRelationInput>?
+        orderBy,
+    _i3.OpponentWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i1.PrismaUnion<_i3.OpponentScalar, Iterable<_i3.OpponentScalar>>? distinct,
+    _i3.OpponentSelect? select,
+    _i3.OpponentInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'distinct': distinct,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.findFirst,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Opponent?>(
+      action: 'findFirstOpponent',
+      result: result,
+      factory: (e) => e != null ? _i2.Opponent.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i2.Opponent> findFirstOrThrow({
+    _i3.OpponentWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.OpponentOrderByWithRelationInput>,
+            _i3.OpponentOrderByWithRelationInput>?
+        orderBy,
+    _i3.OpponentWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i1.PrismaUnion<_i3.OpponentScalar, Iterable<_i3.OpponentScalar>>? distinct,
+    _i3.OpponentSelect? select,
+    _i3.OpponentInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'distinct': distinct,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.findFirstOrThrow,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Opponent>(
+      action: 'findFirstOpponentOrThrow',
+      result: result,
+      factory: (e) => _i2.Opponent.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<Iterable<_i2.Opponent>> findMany({
+    _i3.OpponentWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.OpponentOrderByWithRelationInput>,
+            _i3.OpponentOrderByWithRelationInput>?
+        orderBy,
+    _i3.OpponentWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i1.PrismaUnion<_i3.OpponentScalar, Iterable<_i3.OpponentScalar>>? distinct,
+    _i3.OpponentSelect? select,
+    _i3.OpponentInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'distinct': distinct,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.findMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<Iterable<_i2.Opponent>>(
+      action: 'findManyOpponent',
+      result: result,
+      factory: (values) =>
+          (values as Iterable).map((e) => _i2.Opponent.fromJson(e)),
+    );
+  }
+
+  _i1.ActionClient<_i2.Opponent> create({
+    required _i1
+        .PrismaUnion<_i3.OpponentCreateInput, _i3.OpponentUncheckedCreateInput>
+        data,
+    _i3.OpponentSelect? select,
+    _i3.OpponentInclude? include,
+  }) {
+    final args = {
+      'data': data,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.createOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Opponent>(
+      action: 'createOneOpponent',
+      result: result,
+      factory: (e) => _i2.Opponent.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i3.AffectedRowsOutput> createMany({
+    required _i1.PrismaUnion<_i3.OpponentCreateManyInput,
+            Iterable<_i3.OpponentCreateManyInput>>
+        data,
+    bool? skipDuplicates,
+  }) {
+    final args = {
+      'data': data,
+      'skipDuplicates': skipDuplicates,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.createMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AffectedRowsOutput>(
+      action: 'createManyOpponent',
+      result: result,
+      factory: (e) => _i3.AffectedRowsOutput.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i2.Opponent?> update({
+    required _i1
+        .PrismaUnion<_i3.OpponentUpdateInput, _i3.OpponentUncheckedUpdateInput>
+        data,
+    required _i3.OpponentWhereUniqueInput where,
+    _i3.OpponentSelect? select,
+    _i3.OpponentInclude? include,
+  }) {
+    final args = {
+      'data': data,
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.updateOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Opponent?>(
+      action: 'updateOneOpponent',
+      result: result,
+      factory: (e) => e != null ? _i2.Opponent.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i3.AffectedRowsOutput> updateMany({
+    required _i1.PrismaUnion<_i3.OpponentUpdateManyMutationInput,
+            _i3.OpponentUncheckedUpdateManyInput>
+        data,
+    _i3.OpponentWhereInput? where,
+  }) {
+    final args = {
+      'data': data,
+      'where': where,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.updateMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AffectedRowsOutput>(
+      action: 'updateManyOpponent',
+      result: result,
+      factory: (e) => _i3.AffectedRowsOutput.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i2.Opponent> upsert({
+    required _i3.OpponentWhereUniqueInput where,
+    required _i1
+        .PrismaUnion<_i3.OpponentCreateInput, _i3.OpponentUncheckedCreateInput>
+        create,
+    required _i1
+        .PrismaUnion<_i3.OpponentUpdateInput, _i3.OpponentUncheckedUpdateInput>
+        update,
+    _i3.OpponentSelect? select,
+    _i3.OpponentInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'create': create,
+      'update': update,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.upsertOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Opponent>(
+      action: 'upsertOneOpponent',
+      result: result,
+      factory: (e) => _i2.Opponent.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<_i2.Opponent?> delete({
+    required _i3.OpponentWhereUniqueInput where,
+    _i3.OpponentSelect? select,
+    _i3.OpponentInclude? include,
+  }) {
+    final args = {
+      'where': where,
+      'select': select,
+      'include': include,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.deleteOne,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i2.Opponent?>(
+      action: 'deleteOneOpponent',
+      result: result,
+      factory: (e) => e != null ? _i2.Opponent.fromJson(e) : null,
+    );
+  }
+
+  _i1.ActionClient<_i3.AffectedRowsOutput> deleteMany(
+      {_i3.OpponentWhereInput? where}) {
+    final args = {'where': where};
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.deleteMany,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AffectedRowsOutput>(
+      action: 'deleteManyOpponent',
+      result: result,
+      factory: (e) => _i3.AffectedRowsOutput.fromJson(e),
+    );
+  }
+
+  _i1.ActionClient<Iterable<_i3.OpponentGroupByOutputType>> groupBy({
+    _i3.OpponentWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.OpponentOrderByWithAggregationInput>,
+            _i3.OpponentOrderByWithAggregationInput>?
+        orderBy,
+    required _i1.PrismaUnion<Iterable<_i3.OpponentScalar>, _i3.OpponentScalar>
+        by,
+    _i3.OpponentScalarWhereWithAggregatesInput? having,
+    int? take,
+    int? skip,
+    _i3.OpponentGroupByOutputTypeSelect? select,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'by': _i1.JsonQuery.groupBySerializer(by),
+      'having': having,
+      'take': take,
+      'skip': skip,
+      'select': select ?? _i1.JsonQuery.groupBySelectSerializer(by),
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.groupBy,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<Iterable<_i3.OpponentGroupByOutputType>>(
+      action: 'groupByOpponent',
+      result: result,
+      factory: (values) => (values as Iterable)
+          .map((e) => _i3.OpponentGroupByOutputType.fromJson(e)),
+    );
+  }
+
+  _i1.ActionClient<_i3.AggregateOpponent> aggregate({
+    _i3.OpponentWhereInput? where,
+    _i1.PrismaUnion<Iterable<_i3.OpponentOrderByWithRelationInput>,
+            _i3.OpponentOrderByWithRelationInput>?
+        orderBy,
+    _i3.OpponentWhereUniqueInput? cursor,
+    int? take,
+    int? skip,
+    _i3.AggregateOpponentSelect? select,
+  }) {
+    final args = {
+      'where': where,
+      'orderBy': orderBy,
+      'cursor': cursor,
+      'take': take,
+      'skip': skip,
+      'select': select,
+    };
+    final query = _i1.serializeJsonQuery(
+      args: args,
+      modelName: 'Opponent',
+      action: _i1.JsonQueryAction.aggregate,
+      datamodel: PrismaClient.datamodel,
+    );
+    final result = _client.$engine.request(
+      query,
+      headers: _client.$transaction.headers,
+      transaction: _client.$transaction.transaction,
+    );
+    return _i1.ActionClient<_i3.AggregateOpponent>(
+      action: 'aggregateOpponent',
+      result: result,
+      factory: (e) => _i3.AggregateOpponent.fromJson(e),
+    );
+  }
+}
+
 class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
   PrismaClient({
     super.datasourceUrl,
@@ -3565,6 +4027,19 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
             'isUpdatedAt': false,
           },
           {
+            'name': 'fffId',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'Int',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
             'name': 'matches',
             'kind': 'object',
             'isList': true,
@@ -3723,14 +4198,30 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
           },
           {
             'name': 'opponent',
-            'kind': 'scalar',
+            'kind': 'object',
             'isList': false,
             'isRequired': true,
             'isUnique': false,
             'isId': false,
             'isReadOnly': false,
             'hasDefaultValue': false,
-            'type': 'String',
+            'type': 'Opponent',
+            'relationName': 'matchOpponent',
+            'relationFromFields': ['opponentId'],
+            'relationToFields': ['id'],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'opponentId',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': true,
+            'hasDefaultValue': false,
+            'type': 'Int',
             'isGenerated': false,
             'isUpdatedAt': false,
           },
@@ -4217,6 +4708,75 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
         'uniqueIndexes': [],
         'isGenerated': false,
       },
+      {
+        'name': 'Opponent',
+        'dbName': null,
+        'fields': [
+          {
+            'name': 'id',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': true,
+            'isReadOnly': false,
+            'hasDefaultValue': true,
+            'type': 'Int',
+            'default': {
+              'name': 'autoincrement',
+              'args': [],
+            },
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'name',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'String',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'fffId',
+            'kind': 'scalar',
+            'isList': false,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'Int',
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+          {
+            'name': 'matches',
+            'kind': 'object',
+            'isList': true,
+            'isRequired': true,
+            'isUnique': false,
+            'isId': false,
+            'isReadOnly': false,
+            'hasDefaultValue': false,
+            'type': 'match',
+            'relationName': 'matchOpponent',
+            'relationFromFields': [],
+            'relationToFields': [],
+            'isGenerated': false,
+            'isUpdatedAt': false,
+          },
+        ],
+        'primaryKey': null,
+        'uniqueFields': [],
+        'uniqueIndexes': [],
+        'isGenerated': false,
+      },
     ],
     'types': [],
   });
@@ -4248,7 +4808,7 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
   @override
   get $engine => _engine ??= _i5.BinaryEngine(
         schema:
-            'generator client {\n  provider = "dart run orm"\n}\n\ndatasource db {\n  provider = "postgresql"\n  url      = env("DATABASE_URL")\n}\n\nmodel user {\n  id         Int       @id @default(autoincrement())\n  email      String    @unique\n  first_name String\n  last_name  String\n  password   String\n  salt       String\n  history    history[]\n}\n\nmodel team {\n  id      Int     @id @default(autoincrement())\n  name    String\n  matches match[] @relation("matchteam")\n}\n\nenum Position {\n  Goalkeeper\n  CenterBack\n  LeftBack\n  RightBack\n  DefensiveMidfielder\n  CentralMidfielder\n  AttackingMidfielder\n  LeftWinger\n  RightWinger\n  Striker\n}\n\nmodel player {\n  id         Int        @id @default(autoincrement())\n  first_name String\n  last_name  String\n  played     played[]\n  can_play   can_play[] @relation("can_play")\n}\n\nmodel match {\n  id            Int      @id @default(autoincrement())\n  team          team?    @relation("matchteam", fields: [teamId], references: [id])\n  teamId        Int?\n  opponent      String\n  teamScore     Int\n  opponentScore Int\n  address       String\n  date          DateTime\n  isHome        Boolean\n  coach         String\n  played        played[]\n}\n\nmodel played {\n  id           Int      @id @default(autoincrement())\n  match        match    @relation(fields: [matchId], references: [id])\n  matchId      Int\n  player       player   @relation(fields: [playerId], references: [id])\n  playerId     Int\n  jerseyNumber Int\n  entryTime    DateTime\n  leaveTime    DateTime\n  goals        Int\n  blocked      Int\n  onTarget     Int\n  offTarget    Int\n  assists      Int\n  yellow       Boolean\n  red          Boolean\n}\n\nmodel can_play {\n  id       Int      @id @default(autoincrement())\n  player   player   @relation("can_play", fields: [playerId], references: [id])\n  playerId Int\n  position Position\n}\n\nenum action_type {\n  CREATE_USER\n  UPDATE_USER\n  DELETE_USER\n  CREATE_TEAM\n  UPDATE_TEAM\n  DELETE_TEAM\n  CREATE_PLAYER\n  UPDATE_PLAYER\n  DELETE_PLAYER\n  CREATE_MATCH\n  UPDATE_MATCH\n  DELETE_MATCH\n  CREATE_PLAYED\n  UPDATE_PLAYED\n  DELETE_PLAYED\n  CREATE_CAN_PLAY\n  UPDATE_CAN_PLAY\n  DELETE_CAN_PLAY\n  ADD_GOAL\n  REMOVE_GOAL\n  ADD_ASSIST\n  REMOVE_ASSIST\n  ADD_YELLOW_CARD\n  REMOVE_YELLOW_CARD\n  ADD_RED_CARD\n  REMOVE_RED_CARD\n  ADD_BLOCKED_SHOT\n  REMOVE_BLOCKED_SHOT\n  ADD_ON_TARGET_SHOT\n  REMOVE_ON_TARGET_SHOT\n  ADD_OFF_TARGET_SHOT\n  REMOVE_OFF_TARGET_SHOT\n  SWITCH_PLAYER\n}\n\nmodel history {\n  id                       Int         @id @default(autoincrement())\n  author                   user        @relation(fields: [authorId], references: [id])\n  authorId                 Int\n  created_at               DateTime    @default(now())\n  action_type              action_type\n  additionnal_informations String\n}\n',
+            'generator client {\n  provider = "dart run orm"\n}\n\ndatasource db {\n  provider = "postgresql"\n  url      = env("DATABASE_URL")\n}\n\nmodel user {\n  id         Int       @id @default(autoincrement())\n  email      String    @unique\n  first_name String\n  last_name  String\n  password   String\n  salt       String\n  history    history[]\n}\n\nmodel team {\n  id      Int     @id @default(autoincrement())\n  name    String\n  fffId  Int\n  matches match[] @relation("matchteam")\n}\n\nenum Position {\n  Goalkeeper\n  CenterBack\n  LeftBack\n  RightBack\n  DefensiveMidfielder\n  CentralMidfielder\n  AttackingMidfielder\n  LeftWinger\n  RightWinger\n  Striker\n}\n\nmodel player {\n  id         Int        @id @default(autoincrement())\n  first_name String\n  last_name  String\n  played     played[]\n  can_play   can_play[] @relation("can_play")\n}\n\nmodel match {\n  id            Int      @id @default(autoincrement())\n  team          team?    @relation("matchteam", fields: [teamId], references: [id])\n  teamId        Int?\n  opponent      Opponent @relation("matchOpponent", fields: [opponentId], references: [id])\n  opponentId    Int\n  teamScore     Int\n  opponentScore Int\n  address       String\n  date          DateTime\n  isHome        Boolean\n  coach         String\n  played        played[]\n}\n\nmodel played {\n  id           Int      @id @default(autoincrement())\n  match        match    @relation(fields: [matchId], references: [id])\n  matchId      Int\n  player       player   @relation(fields: [playerId], references: [id])\n  playerId     Int\n  jerseyNumber Int\n  entryTime    DateTime\n  leaveTime    DateTime\n  goals        Int\n  blocked      Int\n  onTarget     Int\n  offTarget    Int\n  assists      Int\n  yellow       Boolean\n  red          Boolean\n}\n\nmodel can_play {\n  id       Int      @id @default(autoincrement())\n  player   player   @relation("can_play", fields: [playerId], references: [id])\n  playerId Int\n  position Position\n}\n\nenum action_type {\n  CREATE_USER\n  UPDATE_USER\n  DELETE_USER\n  CREATE_TEAM\n  UPDATE_TEAM\n  DELETE_TEAM\n  CREATE_PLAYER\n  UPDATE_PLAYER\n  DELETE_PLAYER\n  CREATE_MATCH\n  UPDATE_MATCH\n  DELETE_MATCH\n  CREATE_PLAYED\n  UPDATE_PLAYED\n  DELETE_PLAYED\n  CREATE_CAN_PLAY\n  UPDATE_CAN_PLAY\n  DELETE_CAN_PLAY\n  ADD_GOAL\n  REMOVE_GOAL\n  ADD_ASSIST\n  REMOVE_ASSIST\n  ADD_YELLOW_CARD\n  REMOVE_YELLOW_CARD\n  ADD_RED_CARD\n  REMOVE_RED_CARD\n  ADD_BLOCKED_SHOT\n  REMOVE_BLOCKED_SHOT\n  ADD_ON_TARGET_SHOT\n  REMOVE_ON_TARGET_SHOT\n  ADD_OFF_TARGET_SHOT\n  REMOVE_OFF_TARGET_SHOT\n  SWITCH_PLAYER\n}\n\nmodel history {\n  id                       Int         @id @default(autoincrement())\n  author                   user        @relation(fields: [authorId], references: [id])\n  authorId                 Int\n  created_at               DateTime    @default(now())\n  action_type              action_type\n  additionnal_informations String\n}\n\nmodel Opponent {\n  id   Int    @id @default(autoincrement())\n  name String\n  fffId Int\n  matches match[] @relation("matchOpponent")\n}',
         datasources: const {
           'db': _i1.Datasource(
             _i1.DatasourceType.environment,
@@ -4274,4 +4834,6 @@ class PrismaClient extends _i1.BasePrismaClient<PrismaClient> {
   CanPlayDelegate get canPlay => CanPlayDelegate._(this);
 
   HistoryDelegate get history => HistoryDelegate._(this);
+
+  OpponentDelegate get opponent => OpponentDelegate._(this);
 }

@@ -20,6 +20,7 @@ model user {
 model team {
   id      Int     @id @default(autoincrement())
   name    String
+  fffId  Int
   matches match[] @relation("matchteam")
 }
 
@@ -48,7 +49,8 @@ model match {
   id            Int      @id @default(autoincrement())
   team          team?    @relation("matchteam", fields: [teamId], references: [id])
   teamId        Int?
-  opponent      String
+  opponent      Opponent @relation("matchOpponent", fields: [opponentId], references: [id])
+  opponentId    Int
   teamScore     Int
   opponentScore Int
   address       String
@@ -126,4 +128,11 @@ model history {
   created_at               DateTime    @default(now())
   action_type              action_type
   additionnal_informations String
+}
+
+model Opponent {
+  id   Int    @id @default(autoincrement())
+  name String
+  fffId Int
+  matches match[] @relation("matchOpponent")
 }

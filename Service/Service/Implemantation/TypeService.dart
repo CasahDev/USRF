@@ -32,4 +32,14 @@ class TypeService with ITypeService {
   Future<Response> updateUser(int id, Map<String, dynamic> data) {
     return dao.updateUser(id, data);
   }
+
+  @override
+  Future<Response> createMatch(Map<String, dynamic> data) {
+    return dao.createMatch(data);
+  }
+
+  @override
+  Future<Response> getMatchById(int id) {
+    return dao.getMatchById(id);
+  }
 }

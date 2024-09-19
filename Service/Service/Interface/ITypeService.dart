@@ -6,4 +6,6 @@ mixin ITypeService {
   Future<Response> getUserById(int id);
   Future<Response> updateUser(int id, Map<String, dynamic> data);
   Future<Response> deleteUser(int id);
+  Future<Response> getMatchById(int id);
+  Future<Response> createMatch(Map<String, dynamic> data);
 }

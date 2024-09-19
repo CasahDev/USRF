@@ -6,6 +6,7 @@ Future<Response> onRequest(RequestContext context, String id) async {
   return switch (context.request.method) {
     HttpMethod.delete => await _deleteUser(context, id),
     HttpMethod.post => await _updateUser(context),
+    HttpMethod.get => await _getUserById(id),
     _ => Response(body: 'Method not allowed', statusCode: 405)
   };
 }
@@ -19,4 +20,8 @@ Future<Response> _updateUser(RequestContext context) async {
     context.request.body as int,
     context.mountedParams,
   );
+}
+
+Future<Response> _getUserById(String id) {
+  return Service.getService().getUserById(id as int);
 }

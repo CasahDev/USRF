@@ -148,6 +148,45 @@ class User {
       };
 }
 
+class Opponent {
+  const Opponent({
+    this.id,
+    this.name,
+    this.fffId,
+    this.matches,
+    this.$count,
+  });
+
+  factory Opponent.fromJson(Map json) => Opponent(
+        id: json['id'],
+        name: json['name'],
+        fffId: json['fffId'],
+        matches: (json['matches'] as Iterable?)
+            ?.map((json) => _i2.Match.fromJson(json)),
+        $count: json['_count'] is Map
+            ? _i3.OpponentCountOutputType.fromJson(json['_count'])
+            : null,
+      );
+
+  final int? id;
+
+  final String? name;
+
+  final int? fffId;
+
+  final Iterable<_i2.Match>? matches;
+
+  final _i3.OpponentCountOutputType? $count;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'fffId': fffId,
+        'matches': matches?.map((e) => e.toJson()),
+        '_count': $count?.toJson(),
+      };
+}
+
 enum Position implements _i1.PrismaEnum {
   goalkeeper._('Goalkeeper'),
   centerBack._('CenterBack'),
@@ -344,7 +383,7 @@ class Match {
   const Match({
     this.id,
     this.teamId,
-    this.opponent,
+    this.opponentId,
     this.teamScore,
     this.opponentScore,
     this.address,
@@ -352,6 +391,7 @@ class Match {
     this.isHome,
     this.coach,
     this.team,
+    this.opponent,
     this.played,
     this.$count,
   });
@@ -359,7 +399,7 @@ class Match {
   factory Match.fromJson(Map json) => Match(
         id: json['id'],
         teamId: json['teamId'],
-        opponent: json['opponent'],
+        opponentId: json['opponentId'],
         teamScore: json['teamScore'],
         opponentScore: json['opponentScore'],
         address: json['address'],
@@ -371,6 +411,9 @@ class Match {
         isHome: json['isHome'],
         coach: json['coach'],
         team: json['team'] is Map ? _i2.Team.fromJson(json['team']) : null,
+        opponent: json['opponent'] is Map
+            ? _i2.Opponent.fromJson(json['opponent'])
+            : null,
         played: (json['played'] as Iterable?)
             ?.map((json) => _i2.Played.fromJson(json)),
         $count: json['_count'] is Map
@@ -382,7 +425,7 @@ class Match {
 
   final int? teamId;
 
-  final String? opponent;
+  final int? opponentId;
 
   final int? teamScore;
 
@@ -398,6 +441,8 @@ class Match {
 
   final _i2.Team? team;
 
+  final _i2.Opponent? opponent;
+
   final Iterable<_i2.Played>? played;
 
   final _i3.MatchCountOutputType? $count;
@@ -405,7 +450,7 @@ class Match {
   Map<String, dynamic> toJson() => {
         'id': id,
         'teamId': teamId,
-        'opponent': opponent,
+        'opponentId': opponentId,
         'teamScore': teamScore,
         'opponentScore': opponentScore,
         'address': address,
@@ -413,6 +458,7 @@ class Match {
         'isHome': isHome,
         'coach': coach,
         'team': team?.toJson(),
+        'opponent': opponent?.toJson(),
         'played': played?.map((e) => e.toJson()),
         '_count': $count?.toJson(),
       };
@@ -422,6 +468,7 @@ class Team {
   const Team({
     this.id,
     this.name,
+    this.fffId,
     this.matches,
     this.$count,
   });
@@ -429,6 +476,7 @@ class Team {
   factory Team.fromJson(Map json) => Team(
         id: json['id'],
         name: json['name'],
+        fffId: json['fffId'],
         matches: (json['matches'] as Iterable?)
             ?.map((json) => _i2.Match.fromJson(json)),
         $count: json['_count'] is Map
@@ -440,6 +488,8 @@ class Team {
 
   final String? name;
 
+  final int? fffId;
+
   final Iterable<_i2.Match>? matches;
 
   final _i3.TeamCountOutputType? $count;
@@ -447,6 +497,7 @@ class Team {
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
+        'fffId': fffId,
         'matches': matches?.map((e) => e.toJson()),
         '_count': $count?.toJson(),
       };
