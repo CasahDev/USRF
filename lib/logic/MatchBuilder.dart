@@ -12,6 +12,12 @@ class MatchBuilder {
       color = const Color.fromARGB(255, 255, 255, 255);
     }
 
+    var responseData = Uri.https("http://api-dofa.prd-aws.fff.fr/api/clubs.json?filter=", "") as Map<String, dynamic>;
+    var logo = responseData["logo"];
+
+    responseData = Uri.https("http://api-dofa.prd-aws.fff.fr/api/clubs.json?filter=", "") as Map<String, dynamic>;
+    var opponentLogo = responseData["logo"];
+
     return Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
         color: const Color(0xFF222222),
@@ -22,8 +28,8 @@ class MatchBuilder {
             children: <Widget>[
               Column(
                 children: [
-                  // Image(image: "")
-                  Text('USRF ${match["team"]}', style: const TextStyle(color: Colors.white),)
+                  Image(image: NetworkImage(logo)),
+                  Text('USRF ${match["team"]}', style: const TextStyle(color: Colors.white),),
                 ],
               ),
               Row(
@@ -35,8 +41,8 @@ class MatchBuilder {
               ),
               Column(
                 children: [
-                  // Image(image: "")
-                  Text(match['opponent'], style: const TextStyle(color: Colors.white),)
+                  Image(image: NetworkImage(opponentLogo)),
+                  Text(match['opponent'], style: const TextStyle(color: Colors.white),),
                 ],
               )
             ]));
