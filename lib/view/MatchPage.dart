@@ -109,9 +109,6 @@ class _MatchState extends State<MatchScreen> {
         ]));
   }
 
-  /// Retourne le lien du logo de la teamId passée en paramètre (utilise l'api de la FFF)
-
-
   _getMatchScreen(Map<String, dynamic> match, BuildContext context) {
     if (!match["ended"]) {
       return _getMatchPlayingScreen(context);
@@ -219,7 +216,9 @@ class _MatchState extends State<MatchScreen> {
               children: [
                 ElevatedButton(
                     style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.secondaryButtonColor)),
-                    onPressed: Match.revertLatchAction(),
+                    onPressed: () {
+                      int lastActionId = Match.revertLatchAction(matchId);
+                    },
                     child: const Text("Revenir en arrière")),
                 ElevatedButton(
                     style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.mainButtonColor)),
@@ -307,8 +306,7 @@ class _MatchState extends State<MatchScreen> {
     );
   }
 
-  _getMatchEndedScreen(
-       match, BuildContext context) {
+  _getMatchEndedScreen(Map<String, dynamic> match, BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Match ${match["team"]} - ${match["opponent"]}"),
@@ -324,7 +322,8 @@ class _MatchState extends State<MatchScreen> {
     );
   }
 
-  _changeGameState( match) {
+  _changeGameState(match) {
+    Match.changeGameState(matchId);
   }
 
   String _getMatchState( match) {

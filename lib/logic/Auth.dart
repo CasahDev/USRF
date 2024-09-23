@@ -6,18 +6,23 @@ import 'package:http/http.dart' as http;
 class Auth {
   late SessionStorage _session;
 
-  static Auth? auth;
+  static Auth? _auth;
 
   static Auth getSession() {
-    auth ??= Auth._();
+    _auth ??= Auth._();
 
-    return auth!;
+    return _auth!;
   }
 
   Auth._() {
     _session = SessionStorage();
   }
 
+  /// email : l'email de l'utilisateur
+  /// password : le mot de passe de l'utilisateur
+  /// Connecte l'utilisateur à l'application
+  /// Stocke les informations de l'utilisateur dans la session
+  /// Stocke le statut de connexion dans la session
   static void login(String email, String password) {
     var account = Uri.http(
         "localhost:8080", "api/user", {"email": email, "password": password});
@@ -32,10 +37,12 @@ class Auth {
     }
   }
 
+  /// Retourne l'email de l'utilisateur stocké dans la session
   static getEmail() {
     return getSession()._session["email"];
   }
 
+  /// Retourne si oui ou non l'utilisateur est connecté
   static isAuthenticated() async {
     Map decodedResponse;
     var client = http.Client();
@@ -43,7 +50,7 @@ class Auth {
       var response = await client.post(
         Uri.http('localhost:8080', 'user/${_getId()}'),
       );
-      
+
       decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
     } finally {
       client.close();
@@ -53,11 +60,17 @@ class Auth {
         decodedResponse["message"] == "User found";
   }
 
+  /// Retourne le prénom de l'utilisateur stocké dans la session
   static getName() {
     return getSession()._session["first_name"];
   }
 
   static _getId() {
     return getSession()._session["id"];
+  }
+
+  static logout() {
+    getSession()._session.clear();
+    getSession()._session["connected"] = "false";
   }
 }
