@@ -43,7 +43,10 @@ class Auth {
   }
 
   /// Retourne si oui ou non l'utilisateur est connecté
-  static isAuthenticated() async {
+  static Future<bool> isAuthenticated() async {
+
+    if (_getId() == null) return false;
+
     Map decodedResponse;
     var client = http.Client();
     try {
@@ -56,7 +59,7 @@ class Auth {
       client.close();
     }
 
-    return getSession()._session["connected"] as bool &&
+    return getSession()._session["connected"] == "true" &&
         decodedResponse["message"] == "User found";
   }
 

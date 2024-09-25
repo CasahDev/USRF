@@ -103,4 +103,29 @@ class Match {
   static void changeGameState(int matchId) {
     // TODO : Mettre à jour l'état du match
   }
+
+
+  static Map<Positions, List<String>> positions = {
+    Positions.goalkeeper: ["Goalkeeper"],
+    Positions.defender: ["CenterBack", "RightBack", "LeftBack"],
+    Positions.midfielder: [
+      "DefensiveMidfielder",
+      "CentralMidfielder",
+      "AttackingMidfielder"
+    ],
+    Positions.forward: ["Striker", "LeftWinger", "RightWinger"],
+    Positions.substitute: ["Substitute"]
+  };
+
+  static String getMatchState(Map<String, dynamic> match) {
+    return switch (match["state"]) {
+      "firstHalf" =>
+      match["time"] < 45 ? "${match["time"]}'" : "45+${match["time"] - 45}'",
+      "secondHalf" =>
+      match["time"] < 90 ? "${match["time"]}'" : "90+${match["time"] - 90}'",
+      "halfTime" => "Mi-temps",
+      "penalties" => "Tirs au but",
+      _ => "Match non commencé"
+    };
+  }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../logic/Auth.dart';
@@ -11,7 +10,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -22,45 +20,68 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      color: Colors.backgroundColor,
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text("Connexion à l'application",
-                style: const TextStyle(color: Colors.textColor, fontSize: 30)),
-            Column(
-              children: [
-                const Text("Email",
-                    style: TextStyle(color: Colors.textColor)),
-                TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Entrez votre nom d\'utilisateur'),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image.asset(
+            "lib/assets/logo.png",
+            height: MediaQuery.of(context).size.height * 0.3,
+          ),
+          const Text("Connexion à l'application",
+              style: TextStyle(color: Colors.textColor, fontSize: 25)),
+          Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 25.0, left: 10.0, right: 10.0),
+                child: Column(
+                  children: [
+                    const Text("Email",
+                        style:
+                            TextStyle(color: Colors.textColor, fontSize: 15)),
+                    TextField(
+                      style: const TextStyle(color: Colors.textColor),
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Entrez votre nom d\'utilisateur'),
+                    ),
+                  ],
                 ),
-                const Text("Mot de passe",
-                    style: TextStyle(color: Colors.textColor)),
-                TextField(
-                  controller: passwordController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Entrez votre mot de passe'),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 25.0, bottom: 25.0, left: 10.0, right: 10.0),
+                child: Column(
+                  children: [
+                    const Text("Mot de passe",
+                        style:
+                            TextStyle(color: Colors.textColor, fontSize: 15)),
+                    TextField(
+                      style: const TextStyle(color: Colors.textColor, fontSize: 15),
+                      controller: passwordController,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Entrez votre mot de passe'),
+                    ),
+                  ],
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Auth.login(emailController.text, passwordController.text);
-                  },
-                  child: const Text('Connexion'),
-                ),
-              ],
-            )
-          ]
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  print("Login");
+                  Auth.login(emailController.text, passwordController.text);
+                },
+                child: const Text('Connexion'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
-
-
 }

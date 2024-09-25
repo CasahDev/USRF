@@ -31,13 +31,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Widget? page = null;
+
   @override
   Widget build(BuildContext context) {
+    if (page == null) {
+      _getStartingPage().then((value) {
+        setState(() {
+          page = value;
+        });
+      });
+    }
+
     return MaterialApp(
-      color: Colors.backgroundColor,
-      home: Container(
-        child: Auth.isAuthenticated() ? const HomePage() : const LoginPage(),
-      )
-    );
+        color: Colors.backgroundColor,
+        home: Scaffold(
+          body: page,
+        ));
+  }
+
+  Future<Widget> _getStartingPage() async {
+    if (await Auth.isAuthenticated()) {
+      return const HomePage();
+    } else {
+      return const LoginPage();
+    }
   }
 }
