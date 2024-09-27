@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../logic/Auth.dart';
+import '../logic/auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -73,7 +73,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  print("Login");
                   Auth.login(emailController.text, passwordController.text);
                 },
                 child: const Text('Connexion'),

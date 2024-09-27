@@ -1,89 +1,87 @@
-import 'Enums.dart';
+import 'package:http/http.dart';
+
+import 'api.dart';
+import 'enums.dart';
 
 class Match {
   static Map<int, Formation> formations = {};
 
   /// team : l'id FFF de l'équipe concernée
+  ///
   /// Récupère le logo de l'équipe à partir de l'API de la FFF
-  static getTeamLogo(int teamId) {
-    // TODO : Récupérer le logo de l'équipe depuis l'api de la FFF
-    var responseData =
-    Uri.https("http://api-dofa.prd-aws.fff.fr/api/clubs.json?filter=", "")
-    as Map<String, dynamic>;
-    return responseData["logo"];
+  static getTeamLogo(int teamId) async {
+    var district = await Api.getFfaApi("clubs.json?cdg.cg_no=30") as Map<String, dynamic>;
+    var club = district.values.firstWhere((element) => element["cl_no"] == teamId);
+    return club["logo"];
   }
 
   /// team : l'équipe concernée
+  ///
   /// Récupère le dernier match de l'équipe (commencé ou terminé)
-  static getMatchByTeam(String team) {
-    // TODO : Récupérer les matchs de l'équipe depuis le backend
-    return {
-      "team": team,
-      "opponent": "Chalon FC 3",
-      "score": 1,
-      "opponentScore": 1
-    };
+  static getMatchByTeam(String team) async {
+    return await Api.get("matchs/$team");
   }
 
   /// id : l'id du match
+  ///
   /// Récupère le match correspondant à l'id
+  ///
   /// Renvoie une Map contenant les informations du match
-  static Map<String, dynamic> getMatchById(int id) {
-    // TODO : Récupérer le match depuis le backend
-    return {
-      "team": "A",
-      "opponent": "Chalon FC 3",
-      "score": 1,
-      "opponentScore": 1
-    };
+  static Future<Response> getMatchById(int id) async {
+    return await Api.get("matchs/$id");
   }
 
   /// team : l'équipe concernée
+  ///
   /// Récupère le dernier match de l'équipe (commencé ou terminé)
+  ///
   /// Renvoie l'id du match
-  static int getLastMatchId(String team) {
-    // TODO : Récupérer le dernier match de l'équipe depuis le backend
-    return 1;
+  static Future<int> getLastMatchId(String team) async {
+    return int.parse(
+        ((await Api.get("matchs/$team")) as Map<String, dynamic>)["id"]);
   }
 
   /// matchId : l'id du match
+  ///
   /// Récupère la composition du match
+  ///
   /// Renvoie une Map contenant les informations des joueurs
-  static Map<String, dynamic> getLineupByMatchId(int matchId) {
-    // TODO : Récupérer la composition du match depuis le backend
-    return {"player": "Jean Dupont", "position": "Gardien"};
+  static Future<Response> getLineupByMatchId(int matchId) async {
+    return await Api.get("match/played/$matchId");
   }
 
   /// matchId : l'id du match
+  ///
   /// Récupère l'historique du match
+  ///
   /// Renvoie une Map contenant les événements du match
+  ///
   /// (id, author, date, action_type, additional_info(player, match, team))
-  static getMatchHistoryById(int matchId) {
-    // TODO : Récupérer l'historique du match depuis le backend
-    return [
-      {"minute": 10, "event": "But", "player": "Jean Dupont"},
-      {"minute": 20, "event": "Carton jaune", "player": "Jean Dupont"}
-    ];
+  static Future<Response> getMatchHistoryById(int matchId) async {
+    return await Api.get("match/history/$matchId");
   }
 
   /// matchId : l'id du match
+  ///
   /// Annule la dernière action du match
+  ///
   /// Renvoie l'identifiant de l'action annulée
-  static int revertLatchAction(int matchId) {
-    // TODO
-    return 1;
+  static Future<Response> revertLatchAction(int matchId) async {
+    return await Api.get("match/revert/$matchId");
   }
 
   /// event : l'événement
+  ///
   /// Récupère l'image correspondant à l'événement
+  ///
   /// Renvoie le chemin de l'image
-  static String getImageByEventType( event) {
+  static String getImageByEventType(event) {
     return switch (event["type"]) {
-    //TODO
-      "addGoal" => "assets/events/goal.svg",
-      "addYellowCard" => "assets/events/yellowCard.svg",
-      "addRedCard" => "assets/events/redCard.svg",
-      "addSubstitute" => "assets/events/substitute.svg",
+      "ADD_GOAL" => "assets/events/goal.svg",
+      "ADD_YELLOW_CARD" => "assets/events/yellowCard.svg",
+      "ADD_RED_CARD" => "assets/events/redCard.svg",
+      "SWITCH_PLAYER" => "assets/events/substitute.svg",
+      // TODO : Ajouter les type pour les événements suivants
       "addInjury" => "assets/events/injury.svg",
       "addPenalty" => "assets/events/penalty.svg",
       _ => ""
@@ -91,19 +89,24 @@ class Match {
   }
 
   /// matchId : l'id du match
+  ///
   /// Change la formation du match
+  ///
   /// Met a jour la formation dans la Map formations
   static changeFormation(int matchId, formation) {
+    // TODO : Mettre à jour la formation du match
     formations[matchId] = formation;
   }
 
   /// matchId : l'id du match
+  ///
   /// Change l'état du match
+  ///
   /// Fait un cycle (pas commencé -> premier mi-temps -> mi-temps -> deuxième mi-temps -> penalties (optionnels) -> terminé)
-  static void changeGameState(int matchId) {
+  static Future<Response> changeGameState(int matchId) async {
     // TODO : Mettre à jour l'état du match
+    return await Api.patch("match/state/$matchId", {});
   }
-
 
   static Map<Positions, List<String>> positions = {
     Positions.goalkeeper: ["Goalkeeper"],
@@ -120,9 +123,9 @@ class Match {
   static String getMatchState(Map<String, dynamic> match) {
     return switch (match["state"]) {
       "firstHalf" =>
-      match["time"] < 45 ? "${match["time"]}'" : "45+${match["time"] - 45}'",
+        match["time"] < 45 ? "${match["time"]}'" : "45+${match["time"] - 45}'",
       "secondHalf" =>
-      match["time"] < 90 ? "${match["time"]}'" : "90+${match["time"] - 90}'",
+        match["time"] < 90 ? "${match["time"]}'" : "90+${match["time"] - 90}'",
       "halfTime" => "Mi-temps",
       "penalties" => "Tirs au but",
       _ => "Match non commencé"

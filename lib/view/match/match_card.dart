@@ -1,28 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:usrf/logic/Match.dart';
-import 'package:usrf/view/MatchPage.dart';
+import 'package:usrf/logic/match.dart';
+import 'package:usrf/view/match/match_page.dart';
 
 class MatchCard extends StatefulWidget {
   final int matchId;
 
-  const MatchCard(this.matchId, {super.key});
+  const MatchCard({
+    super.key,
+    required this.matchId,
+  });
 
   @override
-  State<MatchCard> createState() => _MatchCardState(matchId);
+  State<MatchCard> createState() => _MatchCardState();
 }
 
-class _MatchCardState extends State<MatchCard>{
-
-  final int matchId;
+class _MatchCardState extends State<MatchCard> {
+  late final int matchId;
 
   Map<String, dynamic> match = {};
 
-  _MatchCardState(this.matchId);
+  _MatchCardState() {
+    matchId = widget.matchId;
+  }
 
   @override
   Widget build(BuildContext context) {
-    match = Match.getMatchById(matchId);
+    Map<String, dynamic> match = {};
+
+    Match.getMatchById(matchId).then((value) {
+      setState(() {
+        match = value as Map<String, dynamic>;
+      });
+    });
 
     Color color;
     if (match["score"] > match["opponentScore"]) {
@@ -33,10 +42,18 @@ class _MatchCardState extends State<MatchCard>{
       color = Colors.white;
     }
 
-    /**
-        var logo = getTeamLogo(match["teamId"]);
-        var opponentLogo = getTeamLogo(match["opponentId"]);
-     */
+    String logo = "https://i.postimg.cc/QNqhb8vV/default-Icon.png";
+    String opponentLogo = "https://i.postimg.cc/QNqhb8vV/default-Icon.png";
+
+    // TODO : update logo use setState()
+
+    Match.getTeamLogo(match["teamId"]).then((value) {
+
+    });
+
+    Match.getTeamLogo(match["opponentId"]).then((value) {
+
+    });
     return TextButton(
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(Colors.backgroundColor),
@@ -51,13 +68,13 @@ class _MatchCardState extends State<MatchCard>{
         ),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => MatchScreen(matchId)));
+              builder: (context) => MatchScreen(matchId: matchId)));
         },
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // Image(image: NetworkImage(logo)),
+              Image(image: NetworkImage(logo)),
               Text(
                 'USRF ${match["team"]}',
                 style: const TextStyle(color: Colors.textColor),
@@ -87,7 +104,7 @@ class _MatchCardState extends State<MatchCard>{
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // Image(image: NetworkImage(opponentLogo)),
+              Image(image: NetworkImage(opponentLogo)),
               Text(
                 match['opponent'],
                 style: const TextStyle(color: Colors.textColor),
@@ -96,5 +113,4 @@ class _MatchCardState extends State<MatchCard>{
           )
         ]));
   }
-
 }

@@ -1,21 +1,40 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../logic/Auth.dart';
-import 'MatchPage.dart';
-import 'package:usrf/logic/Match.dart';
+import 'package:usrf/logic/auth.dart';
+import './match/match_page.dart';
+import 'package:usrf/logic/match.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
   State<HomePage> createState() => HomePageState();
-
 }
 
 class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    int matchA = 0;
+    Match.getLastMatchId("A").then((value) {
+      setState(() {
+        matchA = value;
+      });
+    });
+
+    int matchB = 0;
+    Match.getLastMatchId("B").then((value) {
+      setState(() {
+        matchB = value;
+      });
+    });
+
+    int matchC = 0;
+    Match.getLastMatchId("C").then((value) {
+      setState(() {
+        matchC = value;
+      });
+    });
+
     return Center(
       // Center is a layout widget. It takes a single child and positions it
       // in the middle of the parent.
@@ -32,9 +51,9 @@ class HomePageState extends State<HomePage> {
             children: [
               const Text("Les derniers matchs",
                   style: TextStyle(color: Colors.textColor)),
-              MatchScreen(Match.getLastMatchId("A")),
-              MatchScreen(Match.getMatchByTeam("B")),
-              MatchScreen(Match.getMatchByTeam("C")),
+              MatchScreen(matchId: matchA),
+              MatchScreen(matchId: matchB),
+              MatchScreen(matchId: matchC),
             ],
           )
         ],

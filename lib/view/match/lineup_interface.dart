@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
-import 'package:usrf/logic/Match.dart';
+import 'package:usrf/logic/match.dart';
 
-import '../logic/Enums.dart';
+import '../../logic/enums.dart';
 
 class LineupInterface extends StatefulWidget {
   final int matchId;
 
-  const LineupInterface(this.matchId, {super.key});
+  const LineupInterface({super.key, required this.matchId});
 
   @override
-  State<StatefulWidget> createState() => _LineupInterfaceState(matchId);
+  State<StatefulWidget> createState() => _LineupInterfaceState();
 }
 
 class _LineupInterfaceState extends State<LineupInterface> {
-  int matchId;
+  late final int matchId;
 
-  _LineupInterfaceState(this.matchId);
+  _LineupInterfaceState() {
+    matchId = widget.matchId;
+  }
 
   @override
   Widget build(BuildContext context) {
-    var lineup = Match.getLineupByMatchId(matchId);
+    Map<String, dynamic> lineup = {};
+    Match.getLineupByMatchId(matchId).then((value) {
+      setState(() {
+        lineup = value as Map<String, dynamic>;
+      });
+    });
+
     return Stack(
       children: [
         SvgPicture.asset(

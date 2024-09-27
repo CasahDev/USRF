@@ -25,7 +25,7 @@ class Auth {
   /// Stocke le statut de connexion dans la session
   static void login(String email, String password) {
     var account = Uri.http(
-        "localhost:8080", "api/user", {"email": email, "password": password});
+        "localhost:8080", "api/user/login", {"email": email, "password": password});
 
     if (account.data?.parameters["message"] == "User logged in") {
       getSession()._session["connected"] = "true";
@@ -65,7 +65,7 @@ class Auth {
 
   /// Retourne le prénom de l'utilisateur stocké dans la session
   static getName() {
-    return getSession()._session["first_name"];
+    return getSession()._session["firstName"];
   }
 
   static _getId() {
