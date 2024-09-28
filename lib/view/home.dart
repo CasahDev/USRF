@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:usrf/logic/auth.dart';
-import './match/match_page.dart';
+import 'package:usrf/view/match/match_card.dart';
 import 'package:usrf/logic/match.dart';
 
 class HomePage extends StatefulWidget {
@@ -51,9 +51,9 @@ class HomePageState extends State<HomePage> {
             children: [
               const Text("Les derniers matchs",
                   style: TextStyle(color: Colors.textColor)),
-              MatchScreen(matchId: matchA),
-              MatchScreen(matchId: matchB),
-              MatchScreen(matchId: matchC),
+              MatchCard(matchId: matchA),
+              MatchCard(matchId: matchB),
+              MatchCard(matchId: matchC),
             ],
           )
         ],

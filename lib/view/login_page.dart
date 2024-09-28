@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:usrf/view/home.dart';
 
 import '../logic/auth.dart';
 
@@ -45,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                             TextStyle(color: Colors.textColor, fontSize: 15)),
                     TextField(
                       style: const TextStyle(color: Colors.textColor),
+                      autofillHints: const [AutofillHints.email],
                       controller: emailController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -62,7 +64,10 @@ class _LoginPageState extends State<LoginPage> {
                         style:
                             TextStyle(color: Colors.textColor, fontSize: 15)),
                     TextField(
-                      style: const TextStyle(color: Colors.textColor, fontSize: 15),
+                      style: const TextStyle(
+                          color: Colors.textColor, fontSize: 15),
+                      obscureText: true,
+                      autofillHints: const [AutofillHints.password],
                       controller: passwordController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -73,7 +78,19 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Auth.login(emailController.text, passwordController.text);
+                  Auth.login(emailController.text, passwordController.text)
+                      .then(
+                    (value) {
+                      if (value) {
+                        return Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomePage(),
+                          ),
+                        );
+                      }
+                    },
+                  );
                 },
                 child: const Text('Connexion'),
               ),

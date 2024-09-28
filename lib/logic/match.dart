@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart';
 
 import 'api.dart';
@@ -38,7 +40,7 @@ class Match {
   /// Renvoie l'id du match
   static Future<int> getLastMatchId(String team) async {
     return int.parse(
-        ((await Api.get("matchs/$team")) as Map<String, dynamic>)["id"]);
+        (jsonDecode((await Api.get("match/$team")).body) as Map<String, dynamic>)["id"]);
   }
 
   /// matchId : l'id du match
@@ -81,9 +83,8 @@ class Match {
       "ADD_YELLOW_CARD" => "assets/events/yellowCard.svg",
       "ADD_RED_CARD" => "assets/events/redCard.svg",
       "SWITCH_PLAYER" => "assets/events/substitute.svg",
-      // TODO : Ajouter les type pour les événements suivants
-      "addInjury" => "assets/events/injury.svg",
-      "addPenalty" => "assets/events/penalty.svg",
+      "ADD_INJURY" => "assets/events/injury.svg",
+      "ADD_PENALTY" => "assets/events/penalty.svg",
       _ => ""
     };
   }

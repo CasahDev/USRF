@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:http/http.dart';
 import 'package:session_storage/session_storage.dart';
 import 'package:http/http.dart' as http;
+
+import 'api.dart';
 
 class Auth {
   late SessionStorage _session;
@@ -23,19 +26,22 @@ class Auth {
   /// Connecte l'utilisateur à l'application
   /// Stocke les informations de l'utilisateur dans la session
   /// Stocke le statut de connexion dans la session
-  static void login(String email, String password) {
-    var account = Uri.http(
-        "localhost:8080", "api/user/login", {"email": email, "password": password});
+  static Future<bool> login(String email, String password) async => await Api.login(email, password).then((value) {
+      Response account = value;
 
-    if (account.data?.parameters["message"] == "User logged in") {
-      getSession()._session["connected"] = "true";
+      if (account.statusCode == 200) {
+        getSession()._session["connected"] = "true";
 
-      (account.data!.parameters["account"] as Map<String, dynamic>)
-          .forEach((key, value) {
-        getSession()._session[key] = value;
-      });
-    }
-  }
+        ((jsonDecode(account.body) as Map<String, dynamic>)["account"] as Map<String, dynamic>)
+            .forEach((key, value) {
+          getSession()._session[key.toString()] = value.toString();
+        });
+
+        return true;
+      }
+
+      return false;
+    });
 
   /// Retourne l'email de l'utilisateur stocké dans la session
   static getEmail() {
@@ -44,7 +50,6 @@ class Auth {
 
   /// Retourne si oui ou non l'utilisateur est connecté
   static Future<bool> isAuthenticated() async {
-
     if (_getId() == null) return false;
 
     Map decodedResponse;
