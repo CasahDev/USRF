@@ -5,25 +5,35 @@ import 'package:usrf/view/match/match_playing_screen.dart';
 
 class MatchScreen extends StatefulWidget {
   final int matchId;
-  const MatchScreen({super.key, required this.matchId,});
+
+  const MatchScreen({
+    super.key,
+    required this.matchId,
+  });
 
   @override
-  State<StatefulWidget> createState() => _MatchState();
+  State<StatefulWidget> createState() => _MatchState(matchId);
 }
 
 class _MatchState extends State<MatchScreen> {
-  late final int matchId;
+  final int matchId;
 
-  _MatchState() {
-    matchId = widget.matchId;
-  }
+  _MatchState(this.matchId);
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> match = {};
+    Map<String, dynamic> match = {
+      "team": "Loading...",
+      "opponent": "Loading...",
+      "score": 0,
+      "opponentScore": 0,
+      "ended": false,
+    };
     matchlogic.Match.getMatchById(matchId).then((value) {
       setState(() {
-        match = value as Map<String, dynamic>;
+        if (value.statusCode == 200) {
+          match = value.body as Map<String, dynamic>;
+        }
       });
     });
 

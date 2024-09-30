@@ -3,7 +3,7 @@ import 'package:http/http.dart';
 
 class Api {
   static const String _ffaApiUrl = "http://api-dofa.prd-aws.fff.fr/api/";
-  static const String _backendUrl = "http://192.168.1.15:8080/";
+  static const String _backendUrl = "http://192.168.1.37:8080/";
 
   static Future<Response> get(String url) async {
     return await http.get(Uri.parse(_backendUrl + url));

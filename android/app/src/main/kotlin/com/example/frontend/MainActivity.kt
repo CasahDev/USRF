@@ -1,4 +1,4 @@
-package fr.sacha.mobile_application
+package fr.sacha.vamosvamos
 
 import io.flutter.embedding.android.FlutterActivity
 

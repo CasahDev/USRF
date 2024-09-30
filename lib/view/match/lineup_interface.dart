@@ -26,7 +26,9 @@ class _LineupInterfaceState extends State<LineupInterface> {
     Map<String, dynamic> lineup = {};
     Match.getLineupByMatchId(matchId).then((value) {
       setState(() {
-        lineup = value as Map<String, dynamic>;
+        if (value.statusCode == 200) {
+          lineup = value as Map<String, dynamic>;
+        }
       });
     });
 

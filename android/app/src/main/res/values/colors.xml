@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="backgroud">#1B1B1B</color>
-    <color name="background_2">#222222</color>
-    <color name="text">#FFFFFF</color>
-    <color name="onDirect">#FF0000</color>
-    <color name="scoreWinning">#01F507</color>
-</resources>

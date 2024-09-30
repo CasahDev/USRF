@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
-            "lib/assets/logo.png",
+            "assets/logo.png",
             height: MediaQuery.of(context).size.height * 0.3,
           ),
           const Text("Connexion à l'application",

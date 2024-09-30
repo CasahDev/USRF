@@ -11,25 +11,37 @@ class MatchCard extends StatefulWidget {
   });
 
   @override
-  State<MatchCard> createState() => _MatchCardState();
+  State<MatchCard> createState() => _MatchCardState(matchId);
 }
 
 class _MatchCardState extends State<MatchCard> {
-  late final int matchId;
+  final int matchId;
 
-  Map<String, dynamic> match = {};
+  Map<String, dynamic> match = {
+    "team": "Loading...",
+    "opponent": "Loading...",
+    "score": 0,
+    "opponentScore": 0,
+    "ended": false,
+  };
 
-  _MatchCardState() {
-    matchId = widget.matchId;
-  }
+  _MatchCardState(this.matchId);
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> match = {};
+    Map<String, dynamic> match = {
+      "team": "Loading...",
+      "opponent": "Loading...",
+      "score": 0,
+      "opponentScore": 0,
+      "ended": false,
+    };
 
     Match.getMatchById(matchId).then((value) {
       setState(() {
-        match = value as Map<String, dynamic>;
+        if (value.statusCode == 200) {
+          match = value.body as Map<String, dynamic>;
+        }
       });
     });
 
@@ -46,14 +58,23 @@ class _MatchCardState extends State<MatchCard> {
     String opponentLogo = "https://i.postimg.cc/QNqhb8vV/default-Icon.png";
 
     // TODO : update logo use setState()
-
+/*
     Match.getTeamLogo(match["teamId"]).then((value) {
-
+      setState(() {
+        if (value.statusCode == 200) {
+          logo = (value.body as Map<String, dynamic>)["logo"] as String;
+        }
+      });
     });
 
     Match.getTeamLogo(match["opponentId"]).then((value) {
-
+      setState(() {
+        if (value.statusCode == 200) {
+          opponentLogo = (value.body as Map<String, dynamic>)["logo"] as String;
+        }
+      });
     });
+*/
     return TextButton(
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(Colors.backgroundColor),
@@ -74,9 +95,9 @@ class _MatchCardState extends State<MatchCard> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Image(image: NetworkImage(logo)),
+              Image(image: NetworkImage(logo), width: 50, height: 50),
               Text(
-                'USRF ${match["team"]}',
+                '${match["team"]}',
                 style: const TextStyle(color: Colors.textColor),
               ),
             ],
@@ -104,7 +125,7 @@ class _MatchCardState extends State<MatchCard> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Image(image: NetworkImage(opponentLogo)),
+              Image(image: NetworkImage(opponentLogo), width: 50, height: 50),
               Text(
                 match['opponent'],
                 style: const TextStyle(color: Colors.textColor),

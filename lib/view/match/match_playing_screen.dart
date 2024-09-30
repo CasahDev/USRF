@@ -21,7 +21,13 @@ class MatchPlayingScreen extends StatefulWidget {
 class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
   late final int matchId;
 
-  Map<String, dynamic> match = {};
+  Map<String, dynamic> match = {
+    "team": "Loading...",
+    "opponent": "Loading...",
+    "score": 0,
+    "opponentScore": 0,
+    "ended": false,
+  };
 
   _MatchPlayingScreenState() {
     matchId = widget.matchId;
@@ -37,12 +43,16 @@ class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
 
     // TODO: getTeamLogo
 
-    matchlogic.Match.getMatchByTeam(match["teamId"]).then((value) {
-
+    matchlogic.Match.getTeamLogo(match["teamId"]).then((value) {
+        if (value.statusCode == 200) {
+          logo = value.body as String;
+        }
     });
 
     matchlogic.Match.getTeamLogo(match["opponentId"]).then((value) {
-
+        if (value.statusCode == 200) {
+          opponentLogo = value.body as String;
+        }
     });
 
     return Scaffold(
@@ -145,7 +155,7 @@ class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
                       int statusCode = 200;
 
                       matchlogic.Match.revertLatchAction(matchId).then((value) {
-                        statusCode = (value.statusCode);
+                        statusCode = value.statusCode;
                       });
 
                       if (statusCode != 200) {

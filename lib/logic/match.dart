@@ -11,7 +11,7 @@ class Match {
   /// team : l'id FFF de l'équipe concernée
   ///
   /// Récupère le logo de l'équipe à partir de l'API de la FFF
-  static getTeamLogo(int teamId) async {
+  static Future<Response> getTeamLogo(int teamId) async {
     var district = await Api.getFfaApi("clubs.json?cdg.cg_no=30") as Map<String, dynamic>;
     var club = district.values.firstWhere((element) => element["cl_no"] == teamId);
     return club["logo"];
@@ -38,9 +38,8 @@ class Match {
   /// Récupère le dernier match de l'équipe (commencé ou terminé)
   ///
   /// Renvoie l'id du match
-  static Future<int> getLastMatchId(String team) async {
-    return int.parse(
-        (jsonDecode((await Api.get("match/$team")).body) as Map<String, dynamic>)["id"]);
+  static Future<Response> getLastMatchId(String team) async {
+    return await Api.get("match/$team");
   }
 
   /// matchId : l'id du match

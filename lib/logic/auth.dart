@@ -22,26 +22,33 @@ class Auth {
   }
 
   /// email : l'email de l'utilisateur
+  ///
   /// password : le mot de passe de l'utilisateur
+  ///
   /// Connecte l'utilisateur à l'application
+  ///
   /// Stocke les informations de l'utilisateur dans la session
+  ///
   /// Stocke le statut de connexion dans la session
-  static Future<bool> login(String email, String password) async => await Api.login(email, password).then((value) {
+  static Future<bool> login(String email, String password) async {
+    var res = false;
+    await Api.login(email, password).then((value) {
       Response account = value;
-
       if (account.statusCode == 200) {
         getSession()._session["connected"] = "true";
 
-        ((jsonDecode(account.body) as Map<String, dynamic>)["account"] as Map<String, dynamic>)
+        ((jsonDecode(account.body) as Map<String, dynamic>)["account"]
+                as Map<String, dynamic>)
             .forEach((key, value) {
           getSession()._session[key.toString()] = value.toString();
         });
 
-        return true;
+        res = true;
       }
-
-      return false;
     });
+
+    return res;
+  }
 
   /// Retourne l'email de l'utilisateur stocké dans la session
   static getEmail() {

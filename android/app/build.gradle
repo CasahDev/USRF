@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "fr.sacha.mobile_application"
+    namespace = "fr.sacha.vamosvamos"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "fr.sacha.usrf"
+        applicationId = "fr.sacha.vamosvamos"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

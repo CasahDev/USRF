@@ -27,7 +27,9 @@ class _HistoryInterfaceState extends State<HistoryInterface> {
 
     Match.getMatchHistoryById(matchId).then((value) {
       setState(() {
-        history = value as Map<String, dynamic>;
+        if (value.statusCode == 200) {
+          history = value.body as Map<String, dynamic>;
+        }
       });
     });
 
@@ -42,11 +44,11 @@ class _HistoryInterfaceState extends State<HistoryInterface> {
 
     // TODO
     Match.getTeamLogo(event["teamId"]).then((value) {
-      /**
-          setState(() {
-          logo = value;
-          });
-       */
+      setState(() {
+        if (value.statusCode == 200) {
+          logo = (value.body as Map<String, dynamic>)["logo"] as String;
+        }
+      });
     });
     return Card(
       color: Colors.secondaryBackgroundColor,

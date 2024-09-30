@@ -39,6 +39,16 @@ dependencies:
   graphic: ^2.5.0
   http: ^1.2.2
   flutter_svg: ^2.0.10+1
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  image_path_android: "assets/icon.png"
+  image_path_ios: "assets/icon.png"
+  android: true
+  ios: true
+  adaptive_icon_background: "assets/icon.png"
+  adaptive_icon_foreground: "assets/bg.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 dev_dependencies:
   flutter_test:
@@ -58,7 +68,7 @@ dev_dependencies:
 flutter:
 
   assets:
-    - lib/assets/
+    - assets/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
