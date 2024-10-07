@@ -1,35 +1,43 @@
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:usrf/logic/Data/DataGetter.dart';
 
-class Api {
+class Api implements DataGetter {
   static const String _ffaApiUrl = "http://api-dofa.prd-aws.fff.fr/api/";
   static const String _backendUrl = "http://192.168.1.37:8080/";
 
-  static Future<Response> get(String url) async {
+  @override
+  Future<Response> get(String url) async {
     return await http.get(Uri.parse(_backendUrl + url));
   }
 
-  static Future<Response> post(String url, Map<String, dynamic> body) async {
+  @override
+  Future<Response> post(String url, Map<String, dynamic> body) async {
     return await http.post(Uri.parse(_backendUrl + url), body: body);
   }
 
-  static Future<Response> put(String url, Map<String, dynamic> body) async {
+  @override
+  Future<Response> put(String url, Map<String, dynamic> body) async {
     return await http.put(Uri.parse(_backendUrl + url), body: body);
   }
 
-  static Future<Response> delete(String url) async {
+  @override
+  Future<Response> delete(String url) async {
     return await http.delete(Uri.parse(_backendUrl + url));
   }
 
-  static Future<Response> patch(String url, Map<String, dynamic> body) async {
+  @override
+  Future<Response> patch(String url, Map<String, dynamic> body) async {
     return await http.patch(Uri.parse(_backendUrl + url), body: body);
   }
 
-  static Future<Response> getFfaApi(String url) async {
+  @override
+  Future<Response> getFfaApi(String url) async {
     return await http.get(Uri.parse(_ffaApiUrl + url));
   }
 
-  static Future<Response> login(String email, String password) async {
+  @override
+  Future<Response> login(String email, String password) async {
     return await http.post(Uri.parse("${_backendUrl}user/login"),
         body: {"email": email, "password": password});
   }

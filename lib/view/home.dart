@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:usrf/logic/auth.dart';
-import 'package:usrf/view/match/match_card.dart';
-import 'package:usrf/logic/match.dart';
+import 'package:usrf/logic/Data/usages/auth.dart';
+import 'package:usrf/view/match/interface/match_card.dart';
+import 'package:usrf/logic/Data/usages/match_api.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

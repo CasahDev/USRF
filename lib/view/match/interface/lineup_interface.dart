@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
-import 'package:usrf/logic/match.dart';
+import 'package:usrf/logic/Data/usages/match_api.dart';
 
-import '../../logic/enums.dart';
+import '../../../logic/enums.dart';
 
 class LineupInterface extends StatefulWidget {
   final int matchId;

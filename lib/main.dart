@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:usrf/logic/auth.dart';
+import 'package:usrf/logic/Data/usages/auth.dart';
 import 'package:usrf/view/home.dart';
 import 'package:usrf/view/login_page.dart';
 

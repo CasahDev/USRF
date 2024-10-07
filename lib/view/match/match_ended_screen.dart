@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:usrf/view/match/interface/history_interface.dart';
 
-import './history_interface.dart';
-import 'lineup_interface.dart';
-import '../../logic/match.dart' as matchlogic;
+import 'interface/lineup_interface.dart';
+import '../../logic/Data/usages/match_api.dart' as matchlogic;
 
 class MatchEndedScreen extends StatefulWidget {
   final int matchId;

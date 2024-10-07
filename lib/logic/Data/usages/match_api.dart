@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:http/http.dart';
+import 'package:usrf/logic/Data/DataFactory.dart';
 
-import 'api.dart';
-import 'enums.dart';
+import '../../enums.dart';
 
 class Match {
   static Map<int, Formation> formations = {};
@@ -12,7 +10,8 @@ class Match {
   ///
   /// Récupère le logo de l'équipe à partir de l'API de la FFF
   static Future<Response> getTeamLogo(int teamId) async {
-    var district = await Api.getFfaApi("clubs.json?cdg.cg_no=30") as Map<String, dynamic>;
+    var api = DataFactory.getDataGetter();
+    var district = await api.getFfaApi("clubs.json?cdg.cg_no=30") as Map<String, dynamic>;
     var club = district.values.firstWhere((element) => element["cl_no"] == teamId);
     return club["logo"];
   }
@@ -21,7 +20,8 @@ class Match {
   ///
   /// Récupère le dernier match de l'équipe (commencé ou terminé)
   static getMatchByTeam(String team) async {
-    return await Api.get("matchs/$team");
+    var api = DataFactory.getDataGetter();
+    return await api.get("matchs/$team");
   }
 
   /// id : l'id du match
@@ -30,7 +30,8 @@ class Match {
   ///
   /// Renvoie une Map contenant les informations du match
   static Future<Response> getMatchById(int id) async {
-    return await Api.get("matchs/$id");
+    var api = DataFactory.getDataGetter();
+    return await api.get("matchs/$id");
   }
 
   /// team : l'équipe concernée
@@ -39,7 +40,8 @@ class Match {
   ///
   /// Renvoie l'id du match
   static Future<Response> getLastMatchId(String team) async {
-    return await Api.get("match/$team");
+    var api = DataFactory.getDataGetter();
+    return await api.get("match/$team");
   }
 
   /// matchId : l'id du match
@@ -48,7 +50,8 @@ class Match {
   ///
   /// Renvoie une Map contenant les informations des joueurs
   static Future<Response> getLineupByMatchId(int matchId) async {
-    return await Api.get("match/played/$matchId");
+    var api = DataFactory.getDataGetter();
+    return await api.get("match/played/$matchId");
   }
 
   /// matchId : l'id du match
@@ -59,7 +62,8 @@ class Match {
   ///
   /// (id, author, date, action_type, additional_info(player, match, team))
   static Future<Response> getMatchHistoryById(int matchId) async {
-    return await Api.get("match/history/$matchId");
+    var api = DataFactory.getDataGetter();
+    return await api.get("match/history/$matchId");
   }
 
   /// matchId : l'id du match
@@ -68,7 +72,8 @@ class Match {
   ///
   /// Renvoie l'identifiant de l'action annulée
   static Future<Response> revertLatchAction(int matchId) async {
-    return await Api.get("match/revert/$matchId");
+    var api = DataFactory.getDataGetter();
+    return await api.get("match/revert/$matchId");
   }
 
   /// event : l'événement
@@ -104,8 +109,9 @@ class Match {
   ///
   /// Fait un cycle (pas commencé -> premier mi-temps -> mi-temps -> deuxième mi-temps -> penalties (optionnels) -> terminé)
   static Future<Response> changeGameState(int matchId) async {
+    var api = DataFactory.getDataGetter();
     // TODO : Mettre à jour l'état du match
-    return await Api.patch("match/state/$matchId", {});
+    return await api.patch("match/state/$matchId", {});
   }
 
   static Map<Positions, List<String>> positions = {

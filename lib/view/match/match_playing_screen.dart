@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:usrf/logic/match.dart' as matchlogic;
+import 'package:usrf/logic/Data/usages/match_api.dart' as matchlogic;
 import 'package:usrf/view/error_popup_interface.dart';
-import 'package:usrf/view/match/lineup_interface.dart';
+import 'package:usrf/view/match/interface/history_interface.dart';
+import 'package:usrf/view/match/interface/lineup_interface.dart';
 
 import 'package:usrf/logic/enums.dart';
-import 'history_interface.dart';
 
 class MatchPlayingScreen extends StatefulWidget {
   final int matchId;
@@ -45,13 +45,13 @@ class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
 
     matchlogic.Match.getTeamLogo(match["teamId"]).then((value) {
         if (value.statusCode == 200) {
-          logo = value.body as String;
+          logo = value.body;
         }
     });
 
     matchlogic.Match.getTeamLogo(match["opponentId"]).then((value) {
         if (value.statusCode == 200) {
-          opponentLogo = value.body as String;
+          opponentLogo = value.body;
         }
     });
 

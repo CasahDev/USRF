@@ -1,0 +1,17 @@
+enum ActionType {
+  createUser,
+  updateUser,
+  deleteUser,
+  createTeam,
+  updateTeam,
+  deleteTeam,
+  createPlayer,
+  updatePlayer,
+  deletePlayer,
+  createMatch,
+  updateMatch,
+  deleteMatch,
+  createPlayed,
+  updatePlayed,
+  deletePlayed,
+}

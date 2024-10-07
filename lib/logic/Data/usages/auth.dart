@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:session_storage/session_storage.dart';
 import 'package:http/http.dart' as http;
-
-import 'api.dart';
+import 'package:usrf/logic/Data/DataFactory.dart';
 
 class Auth {
   late SessionStorage _session;
 
   static Auth? _auth;
 
+  /// Retourne l'instance de la classe Auth
   static Auth getSession() {
     _auth ??= Auth._();
 
@@ -31,14 +31,21 @@ class Auth {
   ///
   /// Stocke le statut de connexion dans la session
   static Future<bool> login(String email, String password) async {
+    return getSession()._login(email, password);
+  }
+
+  Future<bool> _login(String email, String password) async {
     var res = false;
-    await Api.login(email, password).then((value) {
+
+    var dataGetter = DataFactory.getDataGetter();
+
+    await dataGetter.login(email, password).then((value) {
       Response account = value;
       if (account.statusCode == 200) {
         getSession()._session["connected"] = "true";
 
         ((jsonDecode(account.body) as Map<String, dynamic>)["account"]
-                as Map<String, dynamic>)
+        as Map<String, dynamic>)
             .forEach((key, value) {
           getSession()._session[key.toString()] = value.toString();
         });
@@ -57,6 +64,26 @@ class Auth {
 
   /// Retourne si oui ou non l'utilisateur est connecté
   static Future<bool> isAuthenticated() async {
+    return getSession()._isAuthenticated();
+  }
+
+  /// Retourne le prénom de l'utilisateur stocké dans la session
+  static getName() {
+    return ("${getSession()._session["firstName"]}  ${getSession()._session["lastName"]}");
+  }
+
+  /// Retourne l'id de l'utilisateur stocké dans la session
+  static _getId() {
+    return getSession()._session["id"];
+  }
+
+  /// Déconnecte l'utilisateur
+  static logout() {
+    getSession()._session.clear();
+    getSession()._session["connected"] = "false";
+  }
+
+  Future<bool> _isAuthenticated() async {
     if (_getId() == null) return false;
 
     Map decodedResponse;
@@ -73,19 +100,5 @@ class Auth {
 
     return getSession()._session["connected"] == "true" &&
         decodedResponse["message"] == "User found";
-  }
-
-  /// Retourne le prénom de l'utilisateur stocké dans la session
-  static getName() {
-    return getSession()._session["firstName"];
-  }
-
-  static _getId() {
-    return getSession()._session["id"];
-  }
-
-  static logout() {
-    getSession()._session.clear();
-    getSession()._session["connected"] = "false";
   }
 }

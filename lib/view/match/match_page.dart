@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:usrf/logic/match.dart' as matchlogic;
+import 'package:usrf/logic/Data/usages/match_api.dart' as matchlogic;
 import 'package:usrf/view/match/match_ended_screen.dart';
 import 'package:usrf/view/match/match_playing_screen.dart';
 

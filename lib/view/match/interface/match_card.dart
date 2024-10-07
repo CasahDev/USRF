@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:usrf/logic/match.dart';
+import 'package:usrf/logic/Data/usages/match_api.dart';
 import 'package:usrf/view/match/match_page.dart';
 
 class MatchCard extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:usrf/logic/match.dart';
+import 'package:usrf/logic/Data/usages/match_api.dart';
 
 class HistoryInterface extends StatefulWidget {
   final int matchId;
