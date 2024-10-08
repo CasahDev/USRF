@@ -1,25 +1,10 @@
 class User {
-  String _id;
-  String _firstName;
-  String _lastName;
-  String _email;
-  String _password;
-  String _salt;
+  late String _id;
+  late String _firstName;
+  late String _lastName;
+  late String _email;
 
-  User(this._id, this._firstName, this._lastName, this._email, this._password,
-      this._salt);
-
-  String get salt => _salt;
-
-  set salt(String value) {
-    _salt = value;
-  }
-
-  String get password => _password;
-
-  set password(String value) {
-    _password = value;
-  }
+  User();
 
   String get email => _email;
 

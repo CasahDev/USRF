@@ -3,5 +3,6 @@ enum GameState {
   firstHalf,
   halfTime,
   secondHalf,
-  end
+  end,
+  penalties
 }

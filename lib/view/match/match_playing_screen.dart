@@ -1,63 +1,77 @@
 import 'package:flutter/material.dart';
-import 'package:usrf/logic/Data/usages/match_api.dart' as matchlogic;
+import 'package:usrf/logic/Data/usages/match_api.dart';
+import 'package:usrf/logic/Observer.dart';
+import 'package:usrf/logic/models/GameState.dart';
+import 'package:usrf/logic/models/team.dart';
 import 'package:usrf/view/error_popup_interface.dart';
 import 'package:usrf/view/match/interface/history_interface.dart';
 import 'package:usrf/view/match/interface/lineup_interface.dart';
 
+import 'package:usrf/logic/models/match.dart';
+
 import 'package:usrf/logic/enums.dart';
 
 class MatchPlayingScreen extends StatefulWidget {
-  final int matchId;
+  final int _matchId;
 
   const MatchPlayingScreen({
     super.key,
-    required this.matchId,
-  });
+    required int matchId,
+  }) : _matchId = matchId;
 
   @override
-  State<MatchPlayingScreen> createState() => _MatchPlayingScreenState();
+  State<MatchPlayingScreen> createState() => _MatchPlayingScreenState(_matchId);
 }
 
-class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
-  late final int matchId;
+class _MatchPlayingScreenState extends State<MatchPlayingScreen>
+    implements Observer {
+  late final Match _match;
 
-  Map<String, dynamic> match = {
-    "team": "Loading...",
-    "opponent": "Loading...",
-    "score": 0,
-    "opponentScore": 0,
-    "ended": false,
-  };
-
-  _MatchPlayingScreenState() {
-    matchId = widget.matchId;
+  _MatchPlayingScreenState(int matchId) {
+    _match.id = matchId;
   }
 
   @override
   Widget build(BuildContext context) {
+    _match.opponentScore = 0;
+    _match.teamScore = 0;
+    _match.team = Team(0, "Loading...", 0);
+    _match.opponent = Team(0, "Loading...", 0);
+    _match.state = GameState.notStarted;
+    _match.address = "Loading...";
+    _match.coach = "Loading...";
+    _match.date = DateTime(2024);
+    _match.isCup = false;
+    _match.isHome = false;
+    _match.time = 0;
+
     Views view = Views.lineup;
-    String matchState = matchlogic.Match.getMatchState(match);
+    String matchState = MatchApi.getMatchState(_match);
+
+    MatchApi.getMatchById(_match.id).then((value) {
+      _match = value;
+    });
 
     var logo = "https://i.postimg.cc/QNqhb8vV/default-Icon.png";
     var opponentLogo = "https://i.postimg.cc/QNqhb8vV/default-Icon.png";
 
     // TODO: getTeamLogo
 
-    matchlogic.Match.getTeamLogo(match["teamId"]).then((value) {
-        if (value.statusCode == 200) {
-          logo = value.body;
-        }
+    MatchApi.getTeamLogo(_match.team.fffId).then((value) {
+      if (value.statusCode == 200) {
+        logo = value.body;
+      }
     });
 
-    matchlogic.Match.getTeamLogo(match["opponentId"]).then((value) {
-        if (value.statusCode == 200) {
-          opponentLogo = value.body;
-        }
+    MatchApi.getTeamLogo(_match.opponent.fffId).then((value) {
+      if (value.statusCode == 200) {
+        opponentLogo = value.body;
+      }
     });
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Match ${match["team"]} - ${match["opponent"]}"),
+        title: Text("Match ${_match.team.name} - ${_match.opponent.name}"),
       ),
       backgroundColor: Colors.backgroundColor,
       body: Center(
@@ -70,7 +84,7 @@ class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
                 children: [
                   Image(image: NetworkImage(logo)),
                   Text(
-                    'USRF ${match["team"]}',
+                    _match.team.name,
                     style: const TextStyle(color: Colors.textColor),
                   ),
                 ],
@@ -80,10 +94,10 @@ class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
                 children: [
                   Row(
                     children: [
-                      Text("${match['score']}",
+                      Text("${_match.teamScore}",
                           style: const TextStyle(color: Colors.white)),
                       const Text(" - ", style: TextStyle(color: Colors.white)),
-                      Text("${match['opponentScore']}",
+                      Text("${_match.opponentScore}",
                           style: const TextStyle(color: Colors.white))
                     ],
                   ),
@@ -98,7 +112,7 @@ class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
                 children: [
                   Image(image: NetworkImage(opponentLogo)),
                   Text(
-                    match['opponent'],
+                    _match.opponent.name,
                     style: const TextStyle(color: Colors.textColor),
                   ),
                 ],
@@ -123,17 +137,17 @@ class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
             ),
             Visibility(
               visible: view == Views.lineup,
-              child: LineupInterface(matchId: matchId),
+              child: LineupInterface(matchId: _match.id),
             ),
             Visibility(
               visible: view == Views.matchHistory,
-              child: HistoryInterface(matchId: matchId),
+              child: HistoryInterface(matchId: _match.id),
             ),
             ElevatedButton(
               style: ButtonStyle(
                   backgroundColor:
                       WidgetStateProperty.all(Colors.mainButtonColor)),
-              onPressed: _changeGameState(match),
+              onPressed: _changeGameState(_match),
               child: Column(
                 children: [
                   if (matchState == "firstHalf")
@@ -154,7 +168,7 @@ class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
                     onPressed: () {
                       int statusCode = 200;
 
-                      matchlogic.Match.revertLatchAction(matchId).then((value) {
+                      MatchApi.revertLatchAction(_match.id).then((value) {
                         statusCode = value.statusCode;
                       });
 
@@ -185,7 +199,7 @@ class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
         const Text("Choisissez la nouvelle formation"),
         for (var formation in Formation.values)
           ElevatedButton(
-            onPressed: matchlogic.Match.changeFormation(matchId, formation),
+            onPressed: MatchApi.changeFormation(_match.id, formation),
             child: Text(formation.name.substring(1)),
           ),
       ],
@@ -193,6 +207,38 @@ class _MatchPlayingScreenState extends State<MatchPlayingScreen> {
   }
 
   _changeGameState(match) {
-    matchlogic.Match.changeGameState(matchId);
+    MatchApi.changeGameState(match.id);
+  }
+
+  @override
+  void update(String key, dynamic newValue) {
+    setState(() {
+      switch (key) {
+        case "team":
+          _match.team = newValue;
+        case "opponent":
+          _match.opponent = newValue;
+        case "teamScore":
+          _match.teamScore = newValue;
+        case "opponentScore":
+          _match.opponentScore = newValue;
+        case "coach":
+          _match.coach = newValue;
+        case "isCup":
+          _match.isCup = newValue;
+        case "time":
+          _match.time = newValue;
+        case "address":
+          _match.address = newValue;
+        case "date":
+          _match.date = newValue;
+        case "isHome":
+          _match.isHome = newValue;
+        case "state":
+          _match.state = newValue;
+        default:
+          break;
+      }
+    });
   }
 }

@@ -4,9 +4,11 @@ import 'package:http/http.dart';
 import 'package:session_storage/session_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:usrf/logic/Data/DataFactory.dart';
+import 'package:usrf/logic/models/user.dart';
 
 class Auth {
   late SessionStorage _session;
+  final User _user = User();
 
   static Auth? _auth;
 
@@ -19,6 +21,14 @@ class Auth {
 
   Auth._() {
     _session = SessionStorage();
+    _user.id = _session["id"] ?? "";
+    _user.email = _session["email"] ?? "";
+    _user.first_name = _session["firstName"] ?? "";
+    _user.last_name = _session["lastName"] ?? "";
+  }
+
+  User getUser() {
+    return _user;
   }
 
   /// email : l'email de l'utilisateur

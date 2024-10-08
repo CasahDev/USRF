@@ -22,4 +22,8 @@ class Team {
   set id(int value) {
     _id = value;
   }
+
+  static Team fromJson(Map<String, dynamic> body) {
+    return Team(body["id"], body["name"], body["fffId"]);
+  }
 }
